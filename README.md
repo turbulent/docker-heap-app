@@ -103,3 +103,13 @@ source code, which is available under the [MIT
 License](http://spdx.org/licenses/MIT). OpCacheGUI is developed by Pieter
 Hordijk.
 
+This Dockerfile packages a compiled binary of [FFmpeg](https://www.ffmpeg.org).
+FFmpeg is licensed under the [GNU General Public
+License](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) or later. You
+can freely replace this binary by running the container while specifying
+a volume at the path `/opt/ffmpeg/bin/ffmpeg-bin-static` like so:
+
+```
+$ docker run -v /path/to/my/ffmpeg:/opt/ffmpeg/bin/ffmpeg-bin-static turbulent/heap-app
+```
+
