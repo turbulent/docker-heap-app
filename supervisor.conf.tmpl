@@ -1,0 +1,36 @@
+[supervisord]
+nodaemon=true
+logfile=/vol/logs/{{HOSTNAME}}-supervisord.log
+
+[unix_http_server]
+file=/var/run/supervisor.sock 
+chmod=0700                       
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///var/run/supervisor.sock 
+
+{%- if VAR_FPM %}
+[program:php-fpm7.1]
+command=/run-fpm.sh
+autorestart=true
+stdout_events_enabled=true
+stderr_events_enabled=true
+umask=002
+priority=1
+{% endif %}
+
+[program:nginx]
+command=/run-nginx.sh
+autorestart=true
+stdout_events_enabled=true
+stderr_events_enabled=true
+priority=2
+
+[program:nullmailer]
+command=/run-nullmailer.sh
+stdout_logfile=/vol/logs/{{HOSTNAME}}-nullmailer.log
+stderr_logfile=/vol/logs/{{HOSTNAME}}-nullmailer.log
+priority=3

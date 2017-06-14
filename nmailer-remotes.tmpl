@@ -1,0 +1,3 @@
+{%- if VAR_NMAILER_REMOTE_HOST -%}
+{{VAR_NMAILER_REMOTE_HOST}} smtp --port={{VAR_NMAILER_REMOTE_PORT or 25}} {% if VAR_NMAILER_REMOTE_TLS %}--starttls {% endif %} {% if VAR_NMAILER_REMOTE_USER %}--user={{VAR_NMAILER_REMOTE_USER}} --pass={{VAR_NMAILER_REMOTE_PASS}}{%- endif -%}
+{%- endif -%}

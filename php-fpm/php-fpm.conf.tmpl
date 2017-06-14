@@ -1,0 +1,36 @@
+[global]
+pid = /var/run/php-fpm.pid
+error_log = /vol/logs/{{HOSTNAME}}-php-fpm.log
+daemonize = no
+
+emergency_restart_threshold = 10
+emergency_restart_interval = 1m
+process_control_timeout = 10s
+
+[www]
+listen = 127.0.0.1:9000
+user = www-data
+group = www-data
+listen.owner = www-data
+listen.group = www-data
+listen.mode = 0660
+listen.backlog = 16384
+
+pm = static
+pm.max_children = {{VAR_FPM_MAX_CHILDREN}}
+pm.start_servers = {{VAR_FPM_MIN_CHILDREN}}
+pm.min_spare_servers = {{VAR_FPM_MIN_CHILDREN}}
+pm.max_spare_servers = {{VAR_FPM_MAX_CHILDREN}}
+pm.max_requests = {{VAR_FPM_MAX_REQUESTS}}
+
+request_terminate_timeout = {{VAR_FPM_REQUEST_TIMEOUT}}
+{%- if VAR_FPM_SLOWLOG %}
+request_slowlog_timeout = {{VAR_FPM_SLOWLOG_TIMEOUT}}
+slowlog = /vol/logs/{{HOSTNAME}}-php-slow.log
+{%- endif %}
+
+catch_workers_output = no
+
+security.limit_extensions = .php
+
+include=/etc/php/7.1/fpm/env.conf

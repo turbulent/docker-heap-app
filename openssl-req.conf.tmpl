@@ -1,0 +1,13 @@
+[ req ]
+default_bits           = 2048
+default_keyfile        = /etc/nginx/ssl.key
+distinguished_name     = req_distinguished_name
+prompt                 = no
+[ req_distinguished_name ]
+C                      = US
+ST                     = NY
+L                      = Test World
+O                      = Develop
+OU                     = Development Unit
+CN                     = {{VAR_NGINX_SERVER_NAME}}
+emailAddress           = develop@turbulent.ca

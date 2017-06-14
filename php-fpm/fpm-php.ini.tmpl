@@ -1,0 +1,27 @@
+[PHP]
+engine = On
+expose_php = Off
+max_execution_time = {{VAR_PHP_MAX_EXECUTION_TIME}}
+memory_limit = {{VAR_PHP_MEMORY_LIMIT}}
+
+error_reporting = E_ALL
+display_errors = Off
+display_startup_errors = Off
+html_errors = Off
+log_errors = true
+error_log = /vol/logs/{{HOSTNAME}}-php-error.log
+
+default_socket_timeout = 5
+
+file_uploads = On
+upload_tmp_dir = /tmp/php
+upload_max_filesize = {{VAR_PHP_UPLOAD_MAX_FILESIZE}}
+post_max_size = {{VAR_PHP_POST_MAX_SIZE}}
+max_file_uploads = {{VAR_PHP_MAX_FILE_UPLOADS}}
+
+allow_url_fopen = Off
+allow_url_include = Off
+
+date.timezone = 'UTC'
+
+cgi.fix_pathinfo=0

@@ -1,0 +1,125 @@
+server_name {{VAR_NGINX_SERVER_NAME}}{{ " " ~ VAR_NGINX_SERVER_ALIASES|ensurelist|join(" ") ~ ';' if VAR_NGINX_SERVER_ALIASES else ";" }} 
+
+root {{VAR_NGINX_DOCROOT}};
+index index.php index.html;
+
+client_max_body_size {{VAR_NGINX_MAX_BODY_SIZE}};
+
+{%- if VAR_NGINX_LOADBALANCER_IPS|ensurelist|length %}
+real_ip_header {{VAR_NGINX_LOADBALANCER_HEADER|default('X-Real-IP')}};
+{%- for lbip in VAR_NGINX_LOADBALANCER_IPS|ensurelist %}
+set_real_ip_from {{lbip}};
+{%- endfor %}
+{%- endif %}
+
+proxy_set_header   Host             $host;
+proxy_set_header   X-Real-IP        $remote_addr;
+proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+proxy_redirect  off;
+proxy_read_timeout {{VAR_NGINX_PROXY_READ_TIMEOUT}};
+proxy_pass_header Expires;
+proxy_pass_header Cache-Control;
+proxy_pass_header Last-Modified;
+proxy_pass_header ETag;
+proxy_pass_header Content-Length;
+
+location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess)$ { deny all; break; }
+location ~ /\. { access_log off; log_not_found off; deny all; }
+
+location /media {
+  add_header 'Access-Control-Allow-Origin' '*';
+  add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+  rewrite ^/media/(\w)(\w\w)(\w\w)(\w\w)(\w\w)(\w\w)(\w\w)r/(.*)/[^\/]*\.([^\.\/]*) /media/$1/$2/$3/$4/$5/$6/$7/$1$2$3$4$5$6$7/$8.$9 break;
+  rewrite ^/media/(\w)(\w\w)(\w\w)(\w\w)(\w\w)(\w\w)(\w\w)/(.*) /media/$1/$2/$3/$4/$5/$6/$7/$1$2$3$4$5$6$7/$8 break;
+  try_files $uri =404;
+}
+
+{%- for map in VAR_NGINX_PROXYMAP|ensurelist %}
+location {{map.location}} { 
+  proxy_pass {{map.destination}}; 
+  {%- if map.websocket %}
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "upgrade";
+  {% endif %}
+  break; 
+}
+{%- endfor %}
+
+{%- for map in VAR_NGINX_REDIRECTMAP|ensurelist %}
+location {{map.location}} { return {{map.code|default('301')}} {{map.destination}}; }
+{%- endfor %}
+
+{%- if VAR_NGINX_AUTHMAP %}
+{%- for map in VAR_NGINX_AUTHMAP|ensurelist %}
+location {{map.location}} { 
+  {%- if map.authfile %} 
+  auth_basic "Restricted";
+  auth_basic_user_file {{map.authfile}}; 
+  {%- else %}
+  auth_basic off;
+  {%- endif %}
+
+  {%- if VAR_NGINX_CACHEMAP %}
+  {%- for map in VAR_NGINX_CACHEMAP|ensurelist %}
+  location {{map.location}} {
+    {%- if map.expires %}
+    expires {{map.expires}};
+    {%- endif %}
+  }
+  {%- endfor %}
+  {%- endif %}
+  
+  try_files $uri $uri/ /index.php$is_args$args; 
+}
+{%- endfor %}
+{%- else %}
+location / { 
+
+  {%- if VAR_NGINX_CACHEMAP %}
+  {%- for map in VAR_NGINX_CACHEMAP|ensurelist %}
+  location {{map.location}} {
+    {%- if map.expires %}
+    expires {{map.expires}};
+    {%- endif %}
+  }
+  {%- endfor %}
+  {%- endif %}
+
+  try_files $uri $uri/ /index.php$is_args$args; 
+}
+{%- endif %}
+
+{% if VAR_FPM %}
+
+location = /index.php { fastcgi_pass php-fpm-tcp; include fastcgi_params; }
+location /heap {
+  {%- if VAR_NGINX_HEAP_AUTH %}
+  auth_basic "Restricted";
+  auth_basic_user_file {{VAR_NGINX_HEAP_AUTH}};
+  {%- endif %}
+  {%- if VAR_NGINX_ALLOWED_HEAP_IPS|ensurelist|length %}
+  {%- for allowip in VAR_NGINX_ALLOWED_HEAP_IPS|ensurelist %}
+  allow {{allowip}};
+  {%- endfor %}
+  {%- endif %}
+  {% if VAR_NGINX_HEAP_AUTH or VAR_NGINX_HEAP_IPS %}
+  satisfy any;
+  deny all;
+  {%- endif %}
+  try_files $uri $uri/ {{VAR_HEAP_INDEX}}$is_args$args;
+}
+location /heap/cache { 
+  allow all; 
+  try_files $uri $uri/ {{VAR_HEAP_INDEX}}$is_args$args;
+}
+
+{%- if VAR_HEAP_INDEX != '/index.php' %}
+location = {{VAR_HEAP_INDEX}} { fastcgi_pass php-fpm-tcp; include fastcgi_params; }
+{%- endif %}
+
+{%- endif %}
+
+{%- if VAR_NGINX_EXTRACONF %}
+include {{VAR_NGINX_EXTRACONF}};
+{%- endif %}
