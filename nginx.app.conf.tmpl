@@ -107,16 +107,12 @@ location /heap {
   satisfy any;
   deny all;
   {%- endif %}
-  try_files $uri $uri/ {{VAR_HEAP_INDEX}}$is_args$args;
+  try_files $uri $uri/ /index.php$is_args$args;
 }
 location /heap/cache { 
   allow all; 
-  try_files $uri $uri/ {{VAR_HEAP_INDEX}}$is_args$args;
+  try_files $uri $uri/ /index.php$is_args$args;
 }
-
-{%- if VAR_HEAP_INDEX != '/index.php' %}
-location = {{VAR_HEAP_INDEX}} { fastcgi_pass php-fpm-tcp; include fastcgi_params; }
-{%- endif %}
 
 {%- endif %}
 

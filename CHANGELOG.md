@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - PHP: 7.1.13
 - nginx: 1.10.3
 
+### Removed
+- `VAR_HEAP_INDEX` environment variable (was never used in 4.x series)
+
 ## [4.0.0] - 2017-06-14
 Initial open-source release.
 

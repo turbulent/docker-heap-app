@@ -77,8 +77,7 @@ ADD imagemagick/policy.xml /etc/ImageMagick/policy.xml
 RUN mkdir /tmp/php && \
   chmod 777 /tmp/php
 
-ENV VAR_HEAP_INDEX="/heap/index.php" \
-  VAR_NGINX_WORKER_PROCESSES="4" \
+ENV VAR_NGINX_WORKER_PROCESSES="4" \
   VAR_NGINX_WORKER_CONNECTIONS="1024" \
   VAR_NGINX_SERVER_NAME="dev.local" \
   VAR_NGINX_SERVER_ALIASES="[]" \
