@@ -95,9 +95,6 @@ VAR_FPM_SLOWLOG_TIMEOUT="120s"
 
 ## License
 
-All work found under this repository is licensed under the [Apache
-License 2.0](LICENSE).
-
 This Dockerfile packages the [OpCacheGUI](https://github.com/PeeHaa/OpCacheGUI)
 source code, which is available under the [MIT
 License](http://spdx.org/licenses/MIT). OpCacheGUI is developed by Pieter
@@ -112,4 +109,9 @@ a volume at the path `/opt/ffmpeg/bin/ffmpeg-bin-static` like so:
 ```
 $ docker run -v /path/to/my/ffmpeg:/opt/ffmpeg/bin/ffmpeg-bin-static turbulent/heap-app
 ```
+
+This product includes GeoLite data created by MaxMind, available from
+[http://www.maxmind.com](http://www.maxmind.com).
+
+All other work found under this repository is licensed under the [Apache License 2.0](LICENSE).
 
