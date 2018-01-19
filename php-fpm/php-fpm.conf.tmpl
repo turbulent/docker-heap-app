@@ -22,6 +22,7 @@ pm.start_servers = {{VAR_FPM_MIN_CHILDREN}}
 pm.min_spare_servers = {{VAR_FPM_MIN_CHILDREN}}
 pm.max_spare_servers = {{VAR_FPM_MAX_CHILDREN}}
 pm.max_requests = {{VAR_FPM_MAX_REQUESTS}}
+pm.status_path = /fpm-status
 
 request_terminate_timeout = {{VAR_FPM_REQUEST_TIMEOUT}}
 {%- if VAR_FPM_SLOWLOG %}

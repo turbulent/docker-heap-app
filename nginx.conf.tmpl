@@ -110,6 +110,7 @@ http {
     server_name {{HOSTNAME}};
     stub_status on;
     access_log   off;
+    location /fpm-status { fastcgi_pass php-fpm-tcp; include fastcgi_params; }
   }
 
   server {

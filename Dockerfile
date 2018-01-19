@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:3.0.0
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 4.0.0
+ENV heap-app 4.1.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
