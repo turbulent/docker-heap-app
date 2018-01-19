@@ -62,6 +62,7 @@ ADD run-nginx.sh /
 ADD ffmpeg-bin-static /opt/ffmpeg/bin
 
 RUN rm -rf /etc/php5/fpm/pool.d
+COPY GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
 
 ADD OpCacheGUI /var/www/php-opcache-gui
 ADD phpinfo.index.php /var/www/php-info/index.php
