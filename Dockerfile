@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:3.0.0
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 4.1.0
+ENV heap-app 5.0.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -10,43 +10,45 @@ RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 
 RUN apt-get update && \
     apt-get install -y \
-      php7.1 \
-      php7.1-apcu \
-      php7.1-bcmath \
-      php7.1-bz2 \
-      php7.1-cli \
-      php7.1-curl \
-      php7.1-dba \
-      php7.1-enchant \
-      php7.1-fpm \
-      php7.1-gd \
-      php7.1-geoip \
-      php7.1-gmp \
-      php7.1-intl \
-      php7.1-json \
-      php7.1-ldap \
-      php7.1-mbstring \
-      php7.1-mcrypt \
-      php7.1-memcached \
-      php7.1-mysql \
-      php7.1-odbc \
-      php7.1-pgsql \
-      php7.1-opcache \
-      php7.1-readline \
-      php7.1-soap \
-      php7.1-sqlite3 \
-      php7.1-tidy \
-      php7.1-xml \
-      php7.1-xmlrpc \
-      php7.1-zip
+      bsd-mailx \
+      imagemagick \
+      inotify-tools \
+      nginx \
+      nullmailer \
+      time \
+      zip \
+      php7.2 \
+      php-apcu \
+      php-bcmath \
+      php-bz2 \
+      php-cli \
+      php-curl \
+      php7.2-dba \
+      php-enchant \
+      php-fpm \
+      php-gd \
+      php-geoip \
+      php-gmp \
+      php-intl \
+      php-json \
+      php-ldap \
+      php-mbstring \
+      php-memcached \
+      php-mysql \
+      php-odbc \
+      php-pgsql \
+      php7.2-opcache \
+      php-readline \
+      php-redis \
+      php-soap \
+      php-sqlite3 \
+      php-tidy \
+      php-xml \
+      php-xmlrpc \
+      php-zip
 
-RUN apt-get -y install time nginx zip imagemagick && \
-  apt-get -y  remove ssmtp && \
-  apt-get -y install bsd-mailx nullmailer && \
-  apt-get -y install inotify-tools && \
+RUN apt-get -y  remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
-
-RUN phpenmod mcrypt
 
 COPY php-fpm /systpl/	
 COPY nginx.conf.tmpl /systpl/
@@ -61,7 +63,6 @@ ADD run-nginx.sh /
 
 ADD ffmpeg-bin-static /opt/ffmpeg/bin
 
-RUN rm -rf /etc/php5/fpm/pool.d
 COPY GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
 
 ADD OpCacheGUI /var/www/php-opcache-gui
