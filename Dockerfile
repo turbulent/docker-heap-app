@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:3.0.0
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 5.0.1
+ENV heap-app 5.1.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -101,6 +101,7 @@ ENV VAR_NGINX_WORKER_PROCESSES="4" \
   VAR_NGINX_UPSTREAMS="" \
   VAR_NGINX_CACHEMAP="" \
   VAR_NGINX_EXTRACONF="" \
+  VAR_NGINX_REAL_IP_RECURSIVE="" \
   VAR_PHP_MAX_EXECUTION_TIME="60" \
   VAR_PHP_MEMORY_LIMIT="128M" \
   VAR_PHP_UPLOAD_MAX_FILESIZE="1024M" \

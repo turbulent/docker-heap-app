@@ -11,6 +11,9 @@ real_ip_header {{VAR_NGINX_LOADBALANCER_HEADER|default('X-Real-IP')}};
 set_real_ip_from {{lbip}};
 {%- endfor %}
 {%- endif %}
+{%- if VAR_NGINX_REAL_IP_RECURSIVE %}
+real_ip_recursive on;
+{%- endif %}
 
 proxy_set_header   Host             $host;
 proxy_set_header   X-Real-IP        $remote_addr;
