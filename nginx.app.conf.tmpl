@@ -29,6 +29,8 @@ proxy_pass_header Content-Length;
 location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess)$ { deny all; break; }
 location ~ /\. { access_log off; log_not_found off; deny all; }
 
+location /robots.txt { try_files /$robots_file =404; }
+
 location /media {
   add_header 'Access-Control-Allow-Origin' '*';
   add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';

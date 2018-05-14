@@ -68,6 +68,7 @@ JSON based option:
 VAR_NGINX_SSL_REDIRECT_EXCEPTIONS='["url","url"]'
 VAR_NGINX_LOADBALANCER_IPS='["ip","ip"]'
 VAR_NGINX_SERVER_ALIASES='["url.example.com", "url2.example.com"]'
+VAR_NGINX_ROBOT_DOMAINS='["url.example.com", "url2.example.com"]'
 
 VAR_NGINX_UPSTREAMS=[{"name":"upstreamname","servers":["server.destination.com"]}]
 VAR_NGINX_PROXYMAP=[{"location":"/matchuri","destination":"http://destinationurl"}]

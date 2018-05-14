@@ -81,6 +81,13 @@ http {
   }
   {%- endif %}
 
+  map $host $robots_file {
+    default robots-off.txt;
+  {%- for domain in VAR_NGINX_ROBOT_DOMAINS|ensurelist %}
+    {{ domain }} robots-on.txt;
+  {%- endfor %}
+  }
+
   server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
