@@ -10,6 +10,7 @@ RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 
 RUN apt-get update && \
     apt-get install -y \
+      wget \
       php7.1 \
       php7.1-apcu \
       php7.1-bcmath \
@@ -48,7 +49,7 @@ RUN apt-get -y install time nginx zip imagemagick && \
 
 RUN phpenmod mcrypt
 
-COPY php-fpm /systpl/	
+COPY php-fpm /systpl/
 COPY nginx.conf.tmpl /systpl/
 COPY nginx.app.conf.tmpl /systpl/
 COPY supervisor.conf.tmpl /systpl/
@@ -126,6 +127,12 @@ ENV VAR_HEAP_INDEX="/heap/index.php" \
   VAR_NMAILER_REMOTE_USER="user@mandrillapp.com" \
   VAR_NMAILER_REMOTE_PASS="examplepass"
 
+RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add -
+RUN sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" \
+  > /etc/apt/sources.list.d/newrelic.list'
+
+RUN apt-get update && apt-get install -y newrelic-php5
+COPY newrelic.ini.tmpl /systpl/
 
 VOLUME ["/vol/logs"]
 VOLUME ["/vol/spool"]
