@@ -17,6 +17,7 @@ RUN apt-get update && \
       nullmailer \
       time \
       zip \
+      wget \
       php7.2 \
       php-apcu \
       php-bcmath \
@@ -50,7 +51,7 @@ RUN apt-get update && \
 RUN apt-get -y  remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
 
-COPY php-fpm /systpl/	
+COPY php-fpm /systpl/
 COPY nginx.conf.tmpl /systpl/
 COPY nginx.app.conf.tmpl /systpl/
 COPY supervisor.conf.tmpl /systpl/
@@ -127,6 +128,12 @@ ENV VAR_NGINX_WORKER_PROCESSES="4" \
   VAR_NMAILER_REMOTE_USER="user@mandrillapp.com" \
   VAR_NMAILER_REMOTE_PASS="examplepass"
 
+RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add -
+RUN sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" \
+  > /etc/apt/sources.list.d/newrelic.list'
+
+RUN apt-get update && apt-get install -y newrelic-php5
+COPY newrelic.ini.tmpl /systpl/
 
 VOLUME ["/vol/logs"]
 VOLUME ["/vol/spool"]
