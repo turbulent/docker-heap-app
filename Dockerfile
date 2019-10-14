@@ -136,7 +136,6 @@ COPY newrelic.ini.tmpl /systpl/
 
 VOLUME ["/vol/logs"]
 VOLUME ["/vol/spool"]
-VOLUME ["/usr/share/GeoIP"]
 
 EXPOSE 80
 CMD ["/run.sh"]
