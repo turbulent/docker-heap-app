@@ -20,7 +20,10 @@ extension = "newrelic.so"
 ;          agent will not initialize at all. However, you can selectively
 ;          disable the agent on a per-directory basis.
 ;
-;newrelic.enabled = true
+
+{% if VAR_NEW_RELIC_LICENSE_KEY %}
+newrelic.enabled = true
+{% endif %}
 
 ; Setting: newrelic.license
 ; Type   : string
@@ -45,7 +48,7 @@ extension = "newrelic.so"
 ;          urge you to remove /etc/newrelic/upgrade_please.key in order to
 ;          eliminate the potential for confusion about exactly where the key
 ;          is coming from.
-
+;
 newrelic.license="{{VAR_NEW_RELIC_LICENSE_KEY}}"
 
 ; Setting: newrelic.logfile
@@ -104,7 +107,7 @@ newrelic.logfile = "/vol/logs/newrelic-agent.log"
 ;          list is considered the 'primary' application name and must be unique
 ;          for each account / license key.
 ;
-newrelic.appname = "PHP Application"
+newrelic.appname = "{{VAR_NEW_RELIC_APP_NAME}}"
 
 ; Setting: newrelic.process_host.display_name
 ; Type   : string
@@ -832,6 +835,7 @@ newrelic.daemon.logfile = "/var/log/newrelic/newrelic-daemon.log"
 
 ; Setting: newrelic.transaction_tracer.gather_input_queries
 ; Type   : boolean
+
 ; Scope  : per-directory
 ; Default: true
 ; Info   : Enables or disables support for tracing Doctrine DQL with Slow SQL queries.
