@@ -13,5 +13,6 @@
 /systpl/systpl.jinja.py /systpl/fpm-php.ini.tmpl > /etc/php/7.2/fpm/php.ini
 /systpl/systpl.jinja.py /systpl/php-fpm.conf.tmpl > /etc/php/7.2/fpm/php-fpm.conf
 /systpl/systpl.jinja.py /systpl/apc.ini.tmpl > /etc/php/7.2/mods-available/apcu.ini
+/systpl/systpl.jinja.py /systpl/newrelic.ini.tmpl > /etc/php/7.2/mods-available/newrelic.ini
 
 exec supervisord -c /etc/supervisor.conf

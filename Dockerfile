@@ -19,34 +19,34 @@ RUN apt-get update && \
       zip \
       wget \
       php7.2 \
-      php-apcu \
-      php-bcmath \
-      php-bz2 \
-      php-cli \
-      php-curl \
+      php7.2-apcu \
+      php7.2-bcmath \
+      php7.2-bz2 \
+      php7.2-cli \
+      php7.2-curl \
       php7.2-dba \
-      php-enchant \
+      php7.2-enchant \
       php7.2-fpm \
-      php-gd \
-      php-geoip \
-      php-gmp \
-      php-intl \
-      php-json \
-      php-ldap \
-      php-mbstring \
-      php-memcached \
-      php-mysql \
-      php-odbc \
-      php-pgsql \
+      php7.2-gd \
+      php7.2-geoip \
+      php7.2-gmp \
+      php7.2-intl \
+      php7.2-json \
+      php7.2-ldap \
+      php7.2-mbstring \
+      php7.2-memcached \
+      php7.2-mysql \
+      php7.2-odbc \
+      php7.2-pgsql \
       php7.2-opcache \
-      php-readline \
-      php-redis \
-      php-soap \
-      php-sqlite3 \
-      php-tidy \
-      php-xml \
-      php-xmlrpc \
-      php-zip
+      php7.2-readline \
+      php7.2-redis \
+      php7.2-soap \
+      php7.2-sqlite3 \
+      php7.2-tidy \
+      php7.2-xml \
+      php7.2-xmlrpc \
+      php7.2-zip
 
 RUN apt-get -y  remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
