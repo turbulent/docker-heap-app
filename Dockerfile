@@ -17,6 +17,7 @@ RUN apt-get update && \
       nullmailer \
       time \
       zip \
+      wget \
       php7.2 \
       php-apcu \
       php-bcmath \
@@ -25,7 +26,7 @@ RUN apt-get update && \
       php-curl \
       php7.2-dba \
       php-enchant \
-      php-fpm \
+      php7.2-fpm \
       php-gd \
       php-geoip \
       php-gmp \
