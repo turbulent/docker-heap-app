@@ -8,6 +8,7 @@ emergency_restart_interval = 1m
 process_control_timeout = 10s
 
 [www]
+access.log = /vol/logs/{{HOSTNAME}}-php-fpm-access.log
 listen = 127.0.0.1:9000
 user = www-data
 group = www-data
