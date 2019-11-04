@@ -9,44 +9,44 @@ RUN apt-get update && apt-get install -y software-properties-common language-pac
 RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
 
 RUN apt-get update && \
-    apt-get install -y \
-      bsd-mailx \
-      imagemagick \
-      inotify-tools \
-      nginx \
-      nullmailer \
-      time \
-      zip \
-      wget \
-      php7.2 \
-      php7.2-apcu \
-      php7.2-bcmath \
-      php7.2-bz2 \
-      php7.2-cli \
-      php7.2-curl \
-      php7.2-dba \
-      php7.2-enchant \
-      php7.2-fpm \
-      php7.2-gd \
-      php7.2-geoip \
-      php7.2-gmp \
-      php7.2-intl \
-      php7.2-json \
-      php7.2-ldap \
-      php7.2-mbstring \
-      php7.2-memcached \
-      php7.2-mysql \
-      php7.2-odbc \
-      php7.2-pgsql \
-      php7.2-opcache \
-      php7.2-readline \
-      php7.2-redis \
-      php7.2-soap \
-      php7.2-sqlite3 \
-      php7.2-tidy \
-      php7.2-xml \
-      php7.2-xmlrpc \
-      php7.2-zip
+  apt-get install -y \
+  bsd-mailx \
+  imagemagick \
+  inotify-tools \
+  nginx \
+  nullmailer \
+  time \
+  zip \
+  wget \
+  php7.2 \
+  php7.2-apcu \
+  php7.2-bcmath \
+  php7.2-bz2 \
+  php7.2-cli \
+  php7.2-curl \
+  php7.2-dba \
+  php7.2-enchant \
+  php7.2-fpm \
+  php7.2-gd \
+  php7.2-geoip \
+  php7.2-gmp \
+  php7.2-intl \
+  php7.2-json \
+  php7.2-ldap \
+  php7.2-mbstring \
+  php7.2-memcached \
+  php7.2-mysql \
+  php7.2-odbc \
+  php7.2-pgsql \
+  php7.2-opcache \
+  php7.2-readline \
+  php7.2-redis \
+  php7.2-soap \
+  php7.2-sqlite3 \
+  php7.2-tidy \
+  php7.2-xml \
+  php7.2-xmlrpc \
+  php7.2-zip
 
 RUN apt-get -y  remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
@@ -126,7 +126,8 @@ ENV VAR_NGINX_WORKER_PROCESSES="4" \
   VAR_NMAILER_REMOTE_PORT="2525" \
   VAR_NMAILER_REMOTE_TLS="1" \
   VAR_NMAILER_REMOTE_USER="user@mandrillapp.com" \
-  VAR_NMAILER_REMOTE_PASS="examplepass"
+  VAR_NMAILER_REMOTE_PASS="examplepass" \
+  VAR_FPM_CATCH_WORKERS_OUTPUT="no"
 
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add -
 RUN sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" \

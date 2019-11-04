@@ -11,13 +11,13 @@ This image is based upon the heap-base docker image.
 ## Usage
 
 ```
-$ docker run -d -p 80:80 heap-app 
+$ docker run -d -p 80:80 heap-app
 ```
 
 You can pass envrionment variables when launching the container:
 
 ```
-$ docker run -d -e "VAR_NGINX_WORKER_PROCESSES=4" -e "VAR_NGINX_SERVER_NAME=foo.com" -p 80:80 heap-app 
+$ docker run -d -e "VAR_NGINX_WORKER_PROCESSES=4" -e "VAR_NGINX_SERVER_NAME=foo.com" -p 80:80 heap-app
 ```
 
 Sample with SSL activated:
@@ -91,6 +91,7 @@ VAR_FPM_MAX_REQUESTS="4000"
 VAR_FPM_REQUEST_TIMEOUT="120"
 VAR_FPM_SLOWLOG="true"
 VAR_FPM_SLOWLOG_TIMEOUT="120s"
+VAR_FPM_CATCH_WORKERS_OUTPUT="no"
 ```
 
 ## License
@@ -114,4 +115,3 @@ This product includes GeoLite data created by MaxMind, available from
 [http://www.maxmind.com](http://www.maxmind.com).
 
 All other work found under this repository is licensed under the [Apache License 2.0](LICENSE).
-

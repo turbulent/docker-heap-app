@@ -30,7 +30,7 @@ request_slowlog_timeout = {{VAR_FPM_SLOWLOG_TIMEOUT}}
 slowlog = /vol/logs/{{HOSTNAME}}-php-slow.log
 {%- endif %}
 
-catch_workers_output = no
+catch_workers_output = {{VAR_FPM_CATCH_WORKERS_OUTPUT}}
 
 security.limit_extensions = .php
 
