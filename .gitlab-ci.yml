@@ -1,0 +1,20 @@
+variables:
+  IMAGE: heap-app
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build
+
+# Only push to docker-registry on tags
+build-and-push:
+  stage: build
+  script:
+    - docker build -t ${REGISTRY}/${IMAGE}:${CI_BUILD_REF_NAME} .
+    - docker push ${REGISTRY}/${IMAGE}:${CI_BUILD_REF_NAME}
+    - $(aws --profile rsi-ecr ecr get-login --region us-east-1)
+    - docker tag ${REGISTRY}/${IMAGE}:${CI_BUILD_REF_NAME} ${ECR_REGISTRY}/${IMAGE}:${CI_BUILD_REF_NAME}
+    - docker push ${ECR_REGISTRY}/${IMAGE}:${CI_BUILD_REF_NAME}
+  only:
+    - tags
+  tags:
+    - node-lts-v6
