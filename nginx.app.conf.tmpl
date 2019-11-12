@@ -1,4 +1,4 @@
-server_name {{VAR_NGINX_SERVER_NAME}}{{ " " ~ VAR_NGINX_SERVER_ALIASES|ensurelist|join(" ") ~ ';' if VAR_NGINX_SERVER_ALIASES else ";" }} 
+server_name {{VAR_NGINX_SERVER_NAME}}{{ " " ~ VAR_NGINX_SERVER_ALIASES|ensurelist|join(" ") ~ ';' if VAR_NGINX_SERVER_ALIASES else ";" }}
 
 root {{VAR_NGINX_DOCROOT}};
 index index.php index.html;
@@ -23,7 +23,7 @@ proxy_pass_header Last-Modified;
 proxy_pass_header ETag;
 proxy_pass_header Content-Length;
 
-location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess)$ { deny all; break; }
+location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess|.\tpl|.\nunj|.\key|.\pem|.\crt|\.lock)$ { deny all; break; }
 location ~ /\. { access_log off; log_not_found off; deny all; }
 
 location /media {
@@ -35,14 +35,14 @@ location /media {
 }
 
 {%- for map in VAR_NGINX_PROXYMAP|ensurelist %}
-location {{map.location}} { 
-  proxy_pass {{map.destination}}; 
+location {{map.location}} {
+  proxy_pass {{map.destination}};
   {%- if map.websocket %}
   proxy_http_version 1.1;
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection "upgrade";
   {% endif %}
-  break; 
+  break;
 }
 {%- endfor %}
 
@@ -52,10 +52,10 @@ location {{map.location}} { return {{map.code|default('301')}} {{map.destination
 
 {%- if VAR_NGINX_AUTHMAP %}
 {%- for map in VAR_NGINX_AUTHMAP|ensurelist %}
-location {{map.location}} { 
-  {%- if map.authfile %} 
+location {{map.location}} {
+  {%- if map.authfile %}
   auth_basic "Restricted";
-  auth_basic_user_file {{map.authfile}}; 
+  auth_basic_user_file {{map.authfile}};
   {%- else %}
   auth_basic off;
   {%- endif %}
@@ -69,12 +69,12 @@ location {{map.location}} {
   }
   {%- endfor %}
   {%- endif %}
-  
-  try_files $uri $uri/ /index.php$is_args$args; 
+
+  try_files $uri $uri/ /index.php$is_args$args;
 }
 {%- endfor %}
 {%- else %}
-location / { 
+location / {
 
   {%- if VAR_NGINX_CACHEMAP %}
   {%- for map in VAR_NGINX_CACHEMAP|ensurelist %}
@@ -86,7 +86,7 @@ location / {
   {%- endfor %}
   {%- endif %}
 
-  try_files $uri $uri/ /index.php$is_args$args; 
+  try_files $uri $uri/ /index.php$is_args$args;
 }
 {%- endif %}
 
@@ -109,8 +109,8 @@ location /heap {
   {%- endif %}
   try_files $uri $uri/ /index.php$is_args$args;
 }
-location /heap/cache { 
-  allow all; 
+location /heap/cache {
+  allow all;
   try_files $uri $uri/ /index.php$is_args$args;
 }
 
