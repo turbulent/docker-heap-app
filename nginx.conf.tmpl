@@ -33,7 +33,7 @@ http {
   access_log /vol/logs/{{HOSTNAME}}-nginx-access.log;
   error_log /vol/logs/{{HOSTNAME}}-nginx-error.log warn;
 
-  {% if VAR_NGINX_GZIP %} 
+  {% if VAR_NGINX_GZIP %}
   gzip on;
   gzip_vary on;
   gzip_comp_level 6;
@@ -118,7 +118,7 @@ http {
     server_name {{HOSTNAME}};
     root /var/www/php-opcache-gui;
     index index.php;
- 
+
     client_max_body_size 1500M;
 
     proxy_set_header   Host             $host;
@@ -132,7 +132,7 @@ http {
     proxy_pass_header ETag;
     proxy_pass_header Content-Length;
 
-    location ~ (\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess)$ { deny all; break; }
+    location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess|\.tpl|\.nunj|\.key|\.pem|\.crt|\.lock)$ { deny all; break; }
     location ~ /\. { access_log off; log_not_found off; deny all; }
 
     location / { try_files $uri $uri/ /index.php$is_args$args; }
@@ -144,7 +144,7 @@ http {
     server_name {{HOSTNAME}};
     root /var/www/php-info;
     index index.php;
- 
+
     client_max_body_size 1500M;
 
     proxy_set_header   Host             $host;
@@ -158,11 +158,11 @@ http {
     proxy_pass_header ETag;
     proxy_pass_header Content-Length;
 
-    location ~ (\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess)$ { deny all; break; }
+    location ~ (\.svn|\.git|\.php|\.gitignore|\.sql|\.sh|\.conf|\.htaccess|\.tpl|\.nunj|\.key|\.pem|\.crt|\.lock)$ { deny all; break; }
     location ~ /\. { access_log off; log_not_found off; deny all; }
 
     location / { try_files $uri $uri/ /index.php$is_args$args; }
     location = /index.php { fastcgi_pass php-fpm-tcp; include fastcgi_params; }
   }
-    
+
 }

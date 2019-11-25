@@ -96,10 +96,9 @@ VAR_FPM_CATCH_WORKERS_OUTPUT="no"
 
 ## License
 
-This Dockerfile packages the [OpCacheGUI](https://github.com/PeeHaa/OpCacheGUI)
+This Dockerfile packages the [opcache-gui](https://github.com/amnuts/opcache-gui)
 source code, which is available under the [MIT
-License](http://spdx.org/licenses/MIT). OpCacheGUI is developed by Pieter
-Hordijk.
+License](https://acollington.mit-license.org/). opcache-gui is developed by Andrew Collington.
 
 This Dockerfile packages a compiled binary of [FFmpeg](https://www.ffmpeg.org).
 FFmpeg is licensed under the [GNU General Public

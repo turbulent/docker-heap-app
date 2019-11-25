@@ -1,5 +1,0 @@
-<?php
-
-$texts = [
-    'foo' => 'bar',
-];

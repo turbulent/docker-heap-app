@@ -66,7 +66,7 @@ ADD ffmpeg-bin-static /opt/ffmpeg/bin
 
 COPY GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
 
-ADD OpCacheGUI /var/www/php-opcache-gui
+ADD opcache-gui /var/www/php-opcache-gui
 ADD phpinfo.index.php /var/www/php-info/index.php
 
 COPY nmailer-me.tmpl /systpl/

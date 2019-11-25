@@ -1,3 +1,0 @@
-<?php
-
-return json_encode(['result' => $this->result]);
