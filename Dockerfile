@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:3.0.0
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 5.3.6
+ENV heap-app 5.3.7
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -48,7 +48,26 @@ RUN apt-get update && \
   php7.2-xmlrpc \
   php7.2-zip
 
-RUN apt-get -y  remove ssmtp && \
+# Support php-rdkafka
+RUN apt-get -y install \
+    libpthread-stubs0-dev \
+    php7.2-dev \
+  && git clone https://github.com/edenhill/librdkafka.git \
+  && cd librdkafka \
+  && ./configure \
+  && make -j 2 \
+  && make install \
+  && cd .. \
+  && git clone https://github.com/arnaud-lb/php-rdkafka.git \
+  && cd php-rdkafka \
+  && phpize \
+  && ./configure \
+  && make all -j 2 \
+  && make install \
+  && apt-get remove -y php7.2-dev
+COPY rdkafka.ini /etc/php/7.2/mods-available/rdkafka.ini
+
+RUN apt-get -y remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
 
 COPY php-fpm /systpl/
