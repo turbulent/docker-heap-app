@@ -157,7 +157,11 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add -
 RUN sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" \
   > /etc/apt/sources.list.d/newrelic.list'
 
-RUN apt-get update && apt-get install -y newrelic-php5
+RUN apt-get update \
+  && apt-get install -y newrelic-php5 \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/apt/lists/*
+
 COPY newrelic.ini.tmpl /systpl/
 
 VOLUME ["/vol/logs"]
