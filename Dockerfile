@@ -20,6 +20,7 @@ RUN apt-get update && \
   wget \
   php7.2 \
   php7.2-apcu \
+  php7.2-apcu-bc \
   php7.2-bcmath \
   php7.2-bz2 \
   php7.2-cli \
@@ -64,8 +65,9 @@ RUN apt-get -y install \
   && ./configure \
   && make all -j 2 \
   && make install \
-  && apt-get remove -y php7.2-dev
-COPY rdkafka.ini /etc/php/7.2/mods-available/rdkafka.ini
+  && apt-get remove -y php7.2-dev \
+  && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
+  && phpenmod rdkafka
 
 RUN apt-get -y remove ssmtp && \
   rm -rf /var/lib/apt/lists/*
