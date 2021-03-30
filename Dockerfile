@@ -65,11 +65,14 @@ RUN apt-get -y install \
   && ./configure \
   && make all -j 2 \
   && make install \
+  && cd .. \
+  && rm -rf librdkafka php-rdkafka \
   && apt-get remove -y php7.2-dev \
   && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
   && phpenmod rdkafka
 
 RUN apt-get -y remove ssmtp && \
+  apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/*
 
 COPY php-fpm /systpl/
