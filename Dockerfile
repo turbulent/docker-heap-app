@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:3.0.0
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 5.3.7
+ENV heap-app 5.3.8
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -55,12 +55,14 @@ RUN apt-get -y install \
     php7.2-dev \
   && git clone https://github.com/edenhill/librdkafka.git \
   && cd librdkafka \
+  && git checkout v1.6.1 \
   && ./configure \
   && make -j 2 \
   && make install \
   && cd .. \
   && git clone https://github.com/arnaud-lb/php-rdkafka.git \
   && cd php-rdkafka \
+  && git checkout 5.0.0 \
   && phpize \
   && ./configure \
   && make all -j 2 \
