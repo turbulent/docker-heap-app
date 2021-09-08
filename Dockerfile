@@ -1,7 +1,7 @@
-FROM turbulent/heap-base:3.0.0
+FROM turbulent/heap-base:4.0.1
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 5.3.8
+ENV heap-app 6.0.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -47,10 +47,14 @@ RUN apt-get update && \
   php7.2-tidy \
   php7.2-xml \
   php7.2-xmlrpc \
-  php7.2-zip
+  php7.2-zip \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/apt/lists/*
 
 # Support php-rdkafka
-RUN apt-get -y install \
+RUN apt-get update \
+  && apt-get -y install \
+    git \
     libpthread-stubs0-dev \
     php7.2-dev \
   && git clone https://github.com/edenhill/librdkafka.git \
@@ -69,9 +73,11 @@ RUN apt-get -y install \
   && make install \
   && cd .. \
   && rm -rf librdkafka php-rdkafka \
-  && apt-get remove -y php7.2-dev \
+  && apt-get remove -y php7.2-dev git \
   && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
-  && phpenmod rdkafka
+  && phpenmod rdkafka \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get -y remove ssmtp && \
   apt-get autoremove -y && \
