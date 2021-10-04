@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:4.0.1
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 6.0.0
+ENV heap-app 6.0.1
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -47,6 +47,7 @@ RUN apt-get update && \
   php7.2-tidy \
   php7.2-xml \
   php7.2-xmlrpc \
+  php7.2-yaml \
   php7.2-zip \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
