@@ -6,14 +6,13 @@ index index.php index.html;
 client_max_body_size {{VAR_NGINX_MAX_BODY_SIZE}};
 
 {%- if VAR_NGINX_LOADBALANCER_IPS|ensurelist|length %}
-real_ip_header {{VAR_NGINX_LOADBALANCER_HEADER|default('X-Real-IP')}};
+real_ip_header {{VAR_NGINX_LOADBALANCER_HEADER|default('X-Forwarded-For')}};
+real_ip_recursive on;
 {%- for lbip in VAR_NGINX_LOADBALANCER_IPS|ensurelist %}
 set_real_ip_from {{lbip}};
 {%- endfor %}
 {%- endif %}
 
-real_ip_header X-Forwarded-For;
-real_ip_recursive on;
 
 proxy_set_header   Host             $host;
 proxy_set_header   X-Real-IP        $remote_addr;
