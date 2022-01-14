@@ -74,15 +74,29 @@ RUN apt-get update \
   && make install \
   && cd .. \
   && rm -rf librdkafka php-rdkafka \
-  && apt-get remove -y php7.2-dev git \
+  && apt-get remove -y  \
   && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
-  && phpenmod rdkafka \
+  && phpenmod rdkafka
+  
+# Install GRPC
+RUN git clone -b v1.44.0 https://github.com/grpc/grpc \
+  && cd grpc \
+  && git submodule update --init \
+  && EXTRA_DEFINES=GRPC_POSIX_FORK_ALLOW_PTHREAD_ATFORK make \
+  && grpc_root="$(pwd)" \
+  && cd src/php/ext/grpc \
+  && phpize \
+  && GRPC_LIB_SUBDIR=libs/opt ./configure --enable-grpc="${grpc_root}" \
+  && make -j 2 \
+  && make install \
+  && echo "extension = grpc.so" > /etc/php/7.2/mods-available/grpc.ini \
+  && phpenmod grpc \
+  && cd ../../../../../ 
+
+
+RUN apt-get -y remove ssmtp php7.2-dev git \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get -y remove ssmtp && \
-  apt-get autoremove -y && \
-  rm -rf /var/lib/apt/lists/*
 
 COPY php-fpm /systpl/
 COPY nginx.conf.tmpl /systpl/
