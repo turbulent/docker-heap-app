@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:4.0.1
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 6.0.2
+ENV heap-app 6.0.3
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -49,54 +49,17 @@ RUN apt-get update && \
   php7.2-xmlrpc \
   php7.2-yaml \
   php7.2-zip \
+  php-pear \
+  php7.2-dev \
+  librdkafka-dev \
+  && pecl install rdkafka grpc \
+  && apt-get remove -y php-pear php7.2-dev linux-headers \
   && apt-get autoremove -y \
-  && rm -rf /var/lib/apt/lists/*
-
-# Support php-rdkafka
-RUN apt-get update \
-  && apt-get -y install \
-    git \
-    libpthread-stubs0-dev \
-    php7.2-dev \
-  && git clone https://github.com/edenhill/librdkafka.git \
-  && cd librdkafka \
-  && git checkout v1.6.1 \
-  && ./configure \
-  && make -j 2 \
-  && make install \
-  && cd .. \
-  && git clone https://github.com/arnaud-lb/php-rdkafka.git \
-  && cd php-rdkafka \
-  && git checkout 5.0.0 \
-  && phpize \
-  && ./configure \
-  && make all -j 2 \
-  && make install \
-  && cd .. \
-  && rm -rf librdkafka php-rdkafka \
-  && apt-get remove -y  \
+  && rm -rf /var/lib/apt/lists/* \
   && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
-  && phpenmod rdkafka
-  
-# Install GRPC
-RUN git clone -b v1.44.0 https://github.com/grpc/grpc \
-  && cd grpc \
-  && git submodule update --init \
-  && EXTRA_DEFINES=GRPC_POSIX_FORK_ALLOW_PTHREAD_ATFORK make \
-  && grpc_root="$(pwd)" \
-  && cd src/php/ext/grpc \
-  && phpize \
-  && GRPC_LIB_SUBDIR=libs/opt ./configure --enable-grpc="${grpc_root}" \
-  && make -j 2 \
-  && make install \
   && echo "extension = grpc.so" > /etc/php/7.2/mods-available/grpc.ini \
-  && phpenmod grpc \
-  && cd ../../../../../ 
-
-
-RUN apt-get -y remove ssmtp php7.2-dev git \
-  && apt-get autoremove -y \
-  && rm -rf /var/lib/apt/lists/*
+  && phpenmod rdkafka \
+  && phpenmod grpc
 
 COPY php-fpm /systpl/
 COPY nginx.conf.tmpl /systpl/
