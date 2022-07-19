@@ -5,7 +5,7 @@
 /systpl/systpl.jinja.py /systpl/nmailer-remotes.tmpl > /etc/nullmailer/remotes
 /systpl/systpl.jinja.py /systpl/nmailer-adminaddr.tmpl > /etc/nullmailer/adminaddr
 
-#initialize the nullmailer trigger and spool dirs into the pesistent volume.
+#initialize the nullmailer trigger and spool dirs into the persistent volume.
 BASEDIR=/vol/spool/${HOSTNAME}-nullmailer
 
 mkdir -p ${BASEDIR}
