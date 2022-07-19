@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:4.0.1
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 6.0.3
+ENV heap-app 6.1.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -18,46 +18,46 @@ RUN apt-get update && \
   time \
   zip \
   wget \
-  php7.2 \
-  php7.2-apcu \
-  php7.2-apcu-bc \
-  php7.2-bcmath \
-  php7.2-bz2 \
-  php7.2-cli \
-  php7.2-curl \
-  php7.2-dba \
-  php7.2-enchant \
-  php7.2-fpm \
-  php7.2-gd \
-  php7.2-geoip \
-  php7.2-gmp \
-  php7.2-intl \
-  php7.2-json \
-  php7.2-ldap \
-  php7.2-mbstring \
-  php7.2-memcached \
-  php7.2-mysql \
-  php7.2-odbc \
-  php7.2-pgsql \
-  php7.2-opcache \
-  php7.2-readline \
-  php7.2-redis \
-  php7.2-soap \
-  php7.2-sqlite3 \
-  php7.2-tidy \
-  php7.2-xml \
-  php7.2-xmlrpc \
-  php7.2-yaml \
-  php7.2-zip \
+  php7.4 \
+  php7.4-apcu \
+  php7.4-apcu-bc \
+  php7.4-bcmath \
+  php7.4-bz2 \
+  php7.4-cli \
+  php7.4-curl \
+  php7.4-dba \
+  php7.4-enchant \
+  php7.4-fpm \
+  php7.4-gd \
+  php7.4-geoip \
+  php7.4-gmp \
+  php7.4-intl \
+  php7.4-json \
+  php7.4-ldap \
+  php7.4-mbstring \
+  php7.4-memcached \
+  php7.4-mysql \
+  php7.4-odbc \
+  php7.4-pgsql \
+  php7.4-opcache \
+  php7.4-readline \
+  php7.4-redis \
+  php7.4-soap \
+  php7.4-sqlite3 \
+  php7.4-tidy \
+  php7.4-xml \
+  php7.4-xmlrpc \
+  php7.4-yaml \
+  php7.4-zip \
   php-pear \
-  php7.2-dev \
+  php7.4-dev \
   librdkafka-dev \
   && pecl install rdkafka grpc \
-  && apt-get remove -y php-pear php7.2-dev linux-headers \
+  && apt-get remove -y php-pear php7.4-dev linux-headers \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/* \
-  && echo "extension = rdkafka.so" > /etc/php/7.2/mods-available/rdkafka.ini \
-  && echo "extension = grpc.so" > /etc/php/7.2/mods-available/grpc.ini \
+  && echo "extension = rdkafka.so" > /etc/php/7.4/mods-available/rdkafka.ini \
+  && echo "extension = grpc.so" > /etc/php/7.4/mods-available/grpc.ini \
   && phpenmod rdkafka \
   && phpenmod grpc
 
