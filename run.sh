@@ -9,10 +9,10 @@
 /systpl/systpl.jinja.py /systpl/fastcgi_params.tmpl > /etc/nginx/fastcgi_params
 
 #FPM and PHP configs
-/systpl/systpl.jinja.py /systpl/cli-php.ini.tmpl > /etc/php/7.4/cli/php.ini
-/systpl/systpl.jinja.py /systpl/fpm-php.ini.tmpl > /etc/php/7.4/fpm/php.ini
-/systpl/systpl.jinja.py /systpl/php-fpm.conf.tmpl > /etc/php/7.4/fpm/php-fpm.conf
-/systpl/systpl.jinja.py /systpl/apc.ini.tmpl > /etc/php/7.4/mods-available/apcu.ini
-/systpl/systpl.jinja.py /systpl/newrelic.ini.tmpl > /etc/php/7.4/mods-available/newrelic.ini
+/systpl/systpl.jinja.py /systpl/cli-php.ini.tmpl > /etc/php/8.1/cli/php.ini
+/systpl/systpl.jinja.py /systpl/fpm-php.ini.tmpl > /etc/php/8.1/fpm/php.ini
+/systpl/systpl.jinja.py /systpl/php-fpm.conf.tmpl > /etc/php/8.1/fpm/php-fpm.conf
+/systpl/systpl.jinja.py /systpl/apc.ini.tmpl > /etc/php/8.1/mods-available/apcu.ini
+/systpl/systpl.jinja.py /systpl/newrelic.ini.tmpl > /etc/php/8.1/mods-available/newrelic.ini
 
 exec supervisord -c /etc/supervisor.conf
