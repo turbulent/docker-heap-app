@@ -1,7 +1,7 @@
 FROM turbulent/heap-base:4.0.1
 MAINTAINER Benoit Beausejour <b@turbulent.ca>
 
-ENV heap-app 6.1.0
+ENV heap-app 6.2.0
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -18,47 +18,47 @@ RUN apt-get update && \
   time \
   zip \
   wget \
-  php7.4 \
-  php7.4-apcu \
-  php7.4-apcu-bc \
-  php7.4-bcmath \
-  php7.4-bz2 \
-  php7.4-cli \
-  php7.4-curl \
-  php7.4-dba \
-  php7.4-enchant \
-  php7.4-fpm \
-  php7.4-gd \
-  php7.4-geoip \
-  php7.4-gmp \
-  php7.4-intl \
-  php7.4-json \
-  php7.4-ldap \
-  php7.4-mbstring \
-  php7.4-memcached \
-  php7.4-mysql \
-  php7.4-odbc \
-  php7.4-pgsql \
-  php7.4-opcache \
-  php7.4-readline \
-  php7.4-redis \
-  php7.4-soap \
-  php7.4-sqlite3 \
-  php7.4-tidy \
-  php7.4-xml \
-  php7.4-xmlrpc \
-  php7.4-yaml \
-  php7.4-zip \
+  libmaxminddb-dev \
+  php8.1 \
+  php8.1-apcu \
+  php8.1-bcmath \
+  php8.1-bz2 \
+  php8.1-cli \
+  php8.1-curl \
+  php8.1-dba \
+  php8.1-enchant \
+  php8.1-fpm \
+  php8.1-gd \
+  php8.1-gmp \
+  php8.1-intl \
+  php8.1-ldap \
+  php8.1-mbstring \
+  php8.1-memcached \
+  php8.1-mysql \
+  php8.1-odbc \
+  php8.1-pgsql \
+  php8.1-opcache \
+  php8.1-readline \
+  php8.1-redis \
+  php8.1-soap \
+  php8.1-sqlite3 \
+  php8.1-tidy \
+  php8.1-xml \
+  php8.1-xmlrpc \
+  php8.1-yaml \
+  php8.1-zip \
   php-pear \
-  php7.4-dev \
+  php8.1-dev \
   librdkafka-dev \
-  && pecl install rdkafka grpc \
-  && apt-get remove -y php-pear php7.4-dev linux-headers \
+  && pecl install rdkafka grpc maxminddb \
+  && apt-get remove -y php-pear php8.1-dev linux-headers \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/* \
-  && echo "extension = rdkafka.so" > /etc/php/7.4/mods-available/rdkafka.ini \
-  && echo "extension = grpc.so" > /etc/php/7.4/mods-available/grpc.ini \
+  && echo "extension = rdkafka.so" > /etc/php/8.1/mods-available/rdkafka.ini \
+  && echo "extension = grpc.so" > /etc/php/8.1/mods-available/grpc.ini \
+  && echo "extension = maxminddb.so" > /etc/php/8.1/mods-available/maxminddb.ini \
   && phpenmod rdkafka \
+  && phpenmod maxminddb \
   && phpenmod grpc
 
 COPY php-fpm /systpl/
@@ -74,7 +74,7 @@ ADD run-nginx.sh /
 
 ADD ffmpeg-bin-static /opt/ffmpeg/bin
 
-COPY GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
+COPY GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
 
 ADD opcache-gui /var/www/php-opcache-gui
 ADD phpinfo.index.php /var/www/php-info/index.php
